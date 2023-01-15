@@ -33,4 +33,24 @@ itemDeleteBtns.forEach(btn => btn.addEventListener("click", function (e) {
                     }
                 })
         }
-    }) }))
+    })
+}))
+
+// AddToCart fetch
+
+let addtocart = document.querySelectorAll(".add-to-basket-btn");
+addtocart.forEach(btn => btn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    let url = btn.getAttribute("href")
+
+    fetch(url)
+        .then(response => {
+            if (response.status == 200) {
+                alert("Added Into Cart");
+            }
+            else {
+                alert("Error");
+            }
+        })
+}))

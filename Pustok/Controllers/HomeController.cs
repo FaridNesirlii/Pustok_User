@@ -42,21 +42,21 @@ namespace Pustok.Controllers
         };
         return View(homeViewModel);
       }
-        public IActionResult SetSession(int id)
-        {
-            HttpContext.Session.SetString("UserId", id.ToString());
-            return Content("Added Session");
-        }
-        public IActionResult GetSession() 
-        {
-          string id =  HttpContext.Session.GetString("UserId");
-            return Content(id);
-        }
-        public IActionResult RemoveSession()
-        {
-            HttpContext.Session.Remove("UserId");
-            return RedirectToAction("index");
-        }
+        //public IActionResult SetSession(int id)
+        //{
+        //    HttpContext.Session.SetString("UserId", id.ToString());
+        //    return Content("Added Session");
+        //}
+        //public IActionResult GetSession() 
+        //{
+        //  string id =  HttpContext.Session.GetString("UserId");
+        //    return Content(id);
+        //}
+        //public IActionResult RemoveSession()
+        //{
+        //    HttpContext.Session.Remove("UserId");
+        //    return RedirectToAction("index");
+        //}
         //public IActionResult SetCookie(string name)
         //{
         //    HttpContext.Response.Cookies.Append("BookName", name);
@@ -68,33 +68,34 @@ namespace Pustok.Controllers
         //    return Content(bookname);
         //}
 
-        public IActionResult SetCookie(int bookId)
-        {
-            List<int> bookIds = new List<int>();
-            string bookIdStr = HttpContext.Request.Cookies["BookId"];
-            if (bookIdStr != null)
-            {
-                bookIds = JsonConvert.DeserializeObject<List<int>>(bookIdStr);
-                bookIds.Add(bookId);
-            }
-            else
-            {
-            bookIds.Add(bookId);
-            }
+        //public IActionResult SetCookie(int bookId)
+        //{
+        //    List<int> bookIds = new List<int>();
+        //    string bookIdStr = HttpContext.Request.Cookies["BookId"];
+        //    if (bookIdStr != null)
+        //    {
+        //        bookIds = JsonConvert.DeserializeObject<List<int>>(bookIdStr);
+        //        bookIds.Add(bookId);
+        //    }
+        //    else
+        //    {
+        //    bookIds.Add(bookId);
+        //    }
             
-            bookIdStr=JsonConvert.SerializeObject(bookIds);
-            HttpContext.Response.Cookies.Append("BookId", bookIdStr);
-            return Content("add cookie");
-        }   
-        public IActionResult GetCookie()
-        {
-            List<int> bookIds  = new List<int>();
-            string bookIdStr= HttpContext.Request.Cookies["BookId"];
-            if (bookIdStr != null)
-            {
-            bookIds= JsonConvert.DeserializeObject<List<int>>(bookIdStr);
-            }
-            return Json(bookIds);
-        }
+        //    bookIdStr=JsonConvert.SerializeObject(bookIds);
+        //    HttpContext.Response.Cookies.Append("BookId", bookIdStr);
+        //    return Content("add cookie");
+        //}   
+        //public IActionResult GetCookie()
+        //{
+        //    List<int> bookIds  = new List<int>();
+        //    string bookIdStr= HttpContext.Request.Cookies["BookId"];
+        //    if (bookIdStr != null)
+        //    {
+        //    bookIds= JsonConvert.DeserializeObject<List<int>>(bookIdStr);
+        //    }
+        //    return Json(bookIds);
+        //}
+
     }
 }

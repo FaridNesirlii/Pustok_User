@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace Pustok.Controllers
 {
     public class BookController : Controller
@@ -33,6 +35,49 @@ namespace Pustok.Controllers
                               .Where(x=>x.GenreId==book.GenreId && x.Id!=book.Id).ToList(),
             };
             return View(viewModel);
+        }
+        public IActionResult AddToCart(int bookId) 
+        {
+            if(!_pustokContext.books.Any(x=>x.Id==bookId)) return NotFound();
+            List<BasketItemViewModel> baskets = new List<BasketItemViewModel>();
+            BasketItemViewModel basket = null;
+            string basketItemStr = HttpContext.Request.Cookies["Basket"];
+            if(basketItemStr != null)
+            {
+               baskets = JsonConvert.DeserializeObject<List<BasketItemViewModel>>(basketItemStr);
+                basket=baskets.FirstOrDefault(x=>x.BookId==bookId);
+                if (basket != null) basket.Count++;
+                else
+                {
+                    basket = new BasketItemViewModel
+                    {
+                        BookId = bookId,
+                        Count = 1
+                    };
+                    baskets.Add(basket);
+                }
+            };
+            
+            //basket = new BasketItemViewModel
+            //{
+            //    BookId= bookId,
+            //    Count=1
+            //}; 
+            //baskets.Add(basket);
+
+            basketItemStr= JsonConvert.SerializeObject(baskets);
+            HttpContext.Response.Cookies.Append("Basket", basketItemStr);
+            return Ok();
+        }
+        public IActionResult GetCart() 
+        {
+            List<BasketItemViewModel> baskets = new List<BasketItemViewModel>();
+            string basketItemStr = HttpContext.Request.Cookies["Basket"];
+            if (basketItemStr != null)
+            {
+               baskets= JsonConvert.DeserializeObject<List<BasketItemViewModel>>(basketItemStr);
+            }
+            return Json(baskets);
         }
     }
 }
