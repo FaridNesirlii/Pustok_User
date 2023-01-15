@@ -1,0 +1,44 @@
+﻿@using Pustok.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Slider
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container">
+    <form method="post" asp-action="update" enctype="multipart/form-data">
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label asp-for="@Model.Title1" class="form-label">Title1</label>
+                <input class="form-control" asp-for="@Model.Title1" placeholder="Title1">
+            </div>
+            <div class="mb-3 col-md-4">
+                <label asp-for="@Model.Title2" class="form-label">Title2</label>
+                <input class="form-control" asp-for="@Model.Title2" placeholder="Title2">
+            </div>
+            <div class="mb-3 col-md-4">
+                <label asp-for="@Model.RedirctUrl" class="form-label">RedirctUrl</label>
+                <input class="form-control" asp-for="@Model.RedirctUrl" placeholder="RedirctUrl">
+            </div>
+            <div class="mb-3 col-md-4">
+                <label asp-for="@Model.RedirctUrlText" class="form-label">RedirctUrlText</label>
+                <input class="form-control" asp-for="@Model.RedirctUrlText" placeholder="RedirctUrlText">
+            </div>
+        </div>
+        <div>
+            <label asp-for="@Model.Desc" class="form-label">Desc</label>
+            <textarea style="width:200;heigth:100" asp-for="@Model.Desc" placeholder="Desc"></textarea>
+        </div>
+        <div>
+            <p>
+                <label asp-for="@Model.ImageFile" class="form-label">ImageFile</label>
+                <input class="form-control" asp-for="@Model.ImageFile" placeholder="ImageFile">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </p>
+        </div>
+        <div style="width: 200px">
+            <img  src="~/uploads/sliders/@Model.Imgage" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
