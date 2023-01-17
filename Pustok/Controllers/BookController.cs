@@ -79,5 +79,31 @@ namespace Pustok.Controllers
             }
             return Json(baskets);
         }
+
+        public IActionResult Checkout()
+        { 
+            List<BasketItemViewModel> basketItems = new List<BasketItemViewModel>();
+            List<CheckoutItemViewModel> baskets = new List<CheckoutItemViewModel>();
+            CheckoutItemViewModel basket = null;
+
+			string basketStr = HttpContext.Request.Cookies["Checkout"];
+            if (basketStr != null)
+            {
+				basketItems = JsonConvert.DeserializeObject<List<BasketItemViewModel>>(basketStr);
+
+                foreach (var item in basketItems)
+                {
+                    basket = new CheckoutItemViewModel
+                    {
+                        Book = _pustokContext.books.FirstOrDefault(x => x.Id == item.BookId),
+                        Count = item.Count,
+                    };
+                    baskets.Add(basket);    
+
+				}
+            }
+
+            return View(baskets);
+        }
     }
 }

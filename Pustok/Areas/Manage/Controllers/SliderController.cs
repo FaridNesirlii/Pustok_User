@@ -1,4 +1,5 @@
 ﻿using Aardvark.Base.Native;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pustok.Helpers;
 using Pustok.Models;
@@ -6,6 +7,7 @@ using Pustok.Models;
 namespace Pustok.Areas.Manage.Controllers
 {
     [Area("manage")]
+    [Authorize(Roles ="SuperAdmin,Admin")]
     public class SliderController : Controller
     {
         private readonly PustokContext _pustokContext;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pustok.Helpers;
 using Pustok.Models;
@@ -8,6 +9,8 @@ using System.IO.Pipelines;
 namespace Pustok.Areas.Manage.Controllers
 {
     [Area("manage")]
+    [Authorize(Roles ="SuperAdmin,Admin")]
+
     public class BookController : Controller
     {
         private readonly PustokContext _pustokContext;
@@ -18,7 +21,6 @@ namespace Pustok.Areas.Manage.Controllers
             _pustokContext = pustokContext;
             envm = _envm;
         }
-
         public IActionResult Index()
         {
             return View(_pustokContext.books.ToList());
